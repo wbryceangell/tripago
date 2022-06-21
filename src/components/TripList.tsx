@@ -1,6 +1,7 @@
-import { Fragment, useEffect, useState } from "react";
+import "./TripList.css";
+import { useEffect, useState } from "react";
 
-type Trip = { title: string; price: string };
+type Trip = { id: string; title: string; price: string };
 
 interface Props {}
 
@@ -12,12 +13,16 @@ const TripList: React.FC<Props> = ({}) => {
       .then(setTrips);
   }, []);
   return (
-    <div>
-      {trips.map((trip) => (
-        <Fragment key={crypto.randomUUID()}>
-          <h2>{trip.title}</h2>
-        </Fragment>
-      ))}
+    <div className="trip-list">
+      <h2>Trip List</h2>
+      <ul>
+        {trips.map((trip) => (
+          <li key={trip.id}>
+            <h3>{trip.title}</h3>
+            <p>{trip.price}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
