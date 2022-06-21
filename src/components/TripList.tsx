@@ -1,19 +1,26 @@
 import "./TripList.css";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 type Trip = { id: string; title: string; price: string; loc: string };
 
 interface Props {}
 
 const TripList: React.FC<Props> = ({}) => {
-  const [trips, setTrips] = useState<Array<Trip>>([]);
   const tripsUrl = "http://localhost:3001/trips";
+
+  const [trips, setTrips] = useState<Array<Trip>>([]);
   const [url, setUrl] = useState(tripsUrl);
-  useEffect(() => {
-    fetch(url)
-      .then((response) => response.json())
-      .then(setTrips);
+
+  const fetchTrips = useCallback(async () => {
+    const response = await fetch(url);
+    const json = await response.json();
+    setTrips(json);
   }, [url]);
+
+  useEffect(() => {
+    fetchTrips();
+  }, [url, fetchTrips]);
+
   return (
     <div className="trip-list">
       <h2>Trip List</h2>
