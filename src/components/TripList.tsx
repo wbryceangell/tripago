@@ -7,9 +7,9 @@ type Trip = { id: string; title: string; price: string; loc: string };
 interface Props {}
 
 const TripList: React.FC<Props> = ({}) => {
-  const tripsUrl = "http://localhost:3001/trips";
+  const tripsUrl = new URL("http://localhost:3001/trips");
   const [url, setUrl] = useState(tripsUrl);
-  const { data, isPending, error } = useFetch(url);
+  const { data, isPending, error } = useFetch(url, { method: "GET" });
 
   useEffect(() => {
     if (error instanceof Error) console.warn(error);
@@ -33,7 +33,7 @@ const TripList: React.FC<Props> = ({}) => {
       )}
       {!isPending && !error && (
         <div className="filters">
-          <button onClick={() => setUrl(`${tripsUrl}?loc=europe`)}>
+          <button onClick={() => setUrl(new URL(`${tripsUrl}?loc=europe`))}>
             European Trips
           </button>
           <button onClick={() => setUrl(tripsUrl)}>All Trips</button>
