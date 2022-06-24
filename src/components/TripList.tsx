@@ -7,7 +7,7 @@ type Trip = { id: string; title: string; price: string; loc: string };
 interface Props {}
 
 const TripList: React.FC<Props> = ({}) => {
-  const tripsUrl = "http://localhost:3001/trips/invalid";
+  const tripsUrl = "http://localhost:3001/trips";
   const [url, setUrl] = useState(tripsUrl);
   const { data, isPending, error } = useFetch(url);
 
